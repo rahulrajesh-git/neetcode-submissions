@@ -1,0 +1,40 @@
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        // o(n) or (n^2)worst case
+
+        int k1=nums.length-k;
+
+        return quickselect(nums,0,nums.length-1,k1);
+
+    }
+
+    public int quickselect(int[] nums,int left,int right,int k){
+         
+         int pivot=nums[right];
+         int p=left;
+
+         for(int i=left;i<right;i++){  // l r
+            if(nums[i]<pivot){
+                int temp=nums[p];  // p is the place for next smallest element
+                nums[p]=nums[i];
+                nums[i]=temp;
+                p++;
+            }
+         }
+
+         //shift pivot to correct position
+         int temp=nums[p]; 
+         nums[p]=nums[right];   ///
+         nums[right]=temp;
+
+         if(p>k){
+           return quickselect(nums,left,p-1,k);
+         }else if(p<k){
+            return quickselect(nums,p+1,right,k);
+         }else{
+            return nums[p];
+         }
+
+         
+    }
+}
